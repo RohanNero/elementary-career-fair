@@ -5,6 +5,9 @@ const path = require("path");
 const pinataApiKey = process.env.PINATA_API_KEY || "";
 const pinataApiSecret = process.env.PINATA_API_SECRET || "";
 const pinata = pinataSDK(pinataApiKey, pinataApiSecret);
+// console.log(pinataApiKey);
+// console.log(pinataApiSecret);
+// console.log(pinata);
 
 async function storeImages(imagesFilePath) {
   const fullImagesPath = path.resolve(imagesFilePath);
@@ -18,7 +21,7 @@ async function storeImages(imagesFilePath) {
       const response = await pinata.pinFileToIPFS(readableStreamForFile);
       responses.push(response);
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
   return { responses, files };
