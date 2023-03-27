@@ -7,15 +7,29 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract ElementaryNFT is ERC721, ERC721Burnable, Ownable {
 
-    struct NFT {
-        string name;
-        string uri;
-        uint id;
-    }
+
+    uint private _tokenCounter;
+    string[] private _tokenURIs;
 
     constructor() ERC721("Montclaire", "MTC") {}
 
-    function safeMint(address to, uint256 tokenId) public onlyOwner {
-        _safeMint(to, tokenId);
+    function safeMint() public onlyOwner {
+        _safeMint(address(this), _tokenCounter);
+        _tokenCounter++;
+    }
+
+    function setUri(string memory uri, uint256 tokenId) public onlyOwner {
+        _tokenURIs[tokenId] = uri;
+    }
+
+    /** View / Pure functions */
+
+
+    function viewTokenCount() public view returns(uint tokenCount) {
+        tokenCount = _tokenCounter;
+    }
+
+    function viewTokenURIs(uint tokenId) public view returns(string memory uri) {
+        uri = _tokenURIs[tokenId];
     }
 }
