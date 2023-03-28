@@ -165,37 +165,37 @@ task("createNFT", "creates an ElementaryNFT with desired parameters")
     } else if (taskArgs.pokemon == "Buizel") {
       pokemon = "ipfs://QmNWgZYFrWtdoSJYFGhXQVrU2DDA1LcCo58RF47wiuJxGZ";
     } else if (taskArgs.pokemon == "Carvanha") {
-      pokemon = "";
+      pokemon = "ipfs://QmaBPxa44TEHfRWBdeSgqvrH72qKacYEB6rfUZ1NARYocw";
     } else if (taskArgs.pokemon == "Clefairy") {
-      pokemon = "";
+      pokemon = "ipfs://QmXP6y9nBaeHt94zXcYY5f7Q8WEJzKbRjbEY36LJadinDd";
     } else if (taskArgs.pokemon == "Corphish") {
-      pokemon = "";
+      pokemon = "ipfs://QmcP7Q6PP2B3UoQo4i3qsNtonGENBa4EtU8KbPdz3sHv2L";
     } else if (taskArgs.pokemon == "Duskull") {
-      pokemon = "";
+      pokemon = "ipfs://QmdAWbqgEhSeonCMPRpuTqn7QqD9JDA11jhNaAiU66LmbT";
     } else if (taskArgs.pokemon == "Ekans") {
-      pokemon = "";
+      pokemon = "ipfs://QmVnJhBk8EDivGp4HYVKVGBSa9bSKPa3S3mTu8ycrKedRH";
     } else if (taskArgs.pokemon == "Golett") {
-      pokemon = "";
+      pokemon = "ipfs://QmNvdFygv97z6gEzP3HEggbbWCXk6Aeq5QiEqNQsRbM2ED";
     } else if (taskArgs.pokemon == "Goldeen") {
-      pokemon = "";
+      pokemon = "ipfs://QmWv5LhDv34x5ZqVkyPdR5wvcG3eVhsDVV8ZByv8N2w8KU";
     } else if (taskArgs.pokemon == "Horsea") {
-      pokemon = "";
+      pokemon = "ipfs://QmeX57BLnfrKmZEuHe8TYacKAnpuhTSBWo5wQGV36ZiUHt";
     } else if (taskArgs.pokemon == "Koffing") {
-      pokemon = "";
+      pokemon = "ipfs://Qmawz3tL89nhn6gKhn5sNBzp131BusaFLkochW3dP3JS7v";
     } else if (taskArgs.pokemon == "Nickit") {
-      pokemon = "";
+      pokemon = "ipfs://QmQgbhcYQ8gj4CoHKCyocCBGszwdC5PkuVqNHvBQyuh5qo";
     } else if (taskArgs.pokemon == "Nincada") {
-      pokemon = "";
+      pokemon = "ipfs://QmYqhsVFgNrpDGGxeV7Fo95jYgRu7Erce68pnwbNy9a3jq";
     } else if (taskArgs.pokemon == "Nosepass") {
-      pokemon = "";
+      pokemon = "ipfs://QmSPx5Ec9DdqqnEWs8qH9dBpuHmG57fB1kumE4p9HPwsNc";
     } else if (taskArgs.pokemon == "Shinx") {
       pokemon = "ipfs://QmY8M5HQ8QRG573BBTKW4Nk6PHkjCFmQX19nyx1JR6jBwo";
     } else if (taskArgs.pokemon == "Sneasel") {
       pokemon = "ipfs://QmZjnTw7CfmbRFgU9LhN3ESVRFc2q9tPRPLaZr7DpEH19E";
     } else if (taskArgs.pokemon == "Voltorb") {
-      pokemon = "";
+      pokemon = "ipfs://QmTSFFn3cGtsj544ja5QMdGiZXP7dhGz55yXUz33so5Xud";
     } else if (taskArgs.pokemon == "Yanma") {
-      pokemon = "";
+      pokemon = "ipfs://QmZ1dWiHNhS1bM72TjKaicj3QKmvmdrE4U64PfHboXepXd";
     }
     const tx = await nft.createNFT(pokemon, taskArgs.name);
     const txReceipt = await tx.wait();
