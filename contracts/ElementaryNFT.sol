@@ -7,11 +7,12 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 error ElementaryNFT__FailedToCall(uint value);
 
-
 /** @author Rohan Nero
   * @title Elementary NFT
   * @notice this contract allows children at the career fair to mint an NFT with their desired token URI
-  * @dev children may also vote for their favorite player between messi or ronaldo
+  * @notice children may also vote for their favorite player between messi or ronaldo
+  * @dev this contract could potentially be expanded upon and used by a teacher who controls everything but in production environment
+  * you would want to stay far away from something structured like this 
    */
 contract ElementaryNFT is ERC721, ERC721Burnable, Ownable {
 
@@ -23,6 +24,9 @@ contract ElementaryNFT is ERC721, ERC721Burnable, Ownable {
 
     event MintedNFT(uint tokenId);
     event SetURI(uint tokenId, string tokenUri);
+    event TradedNFT(uint firstTokenId, uint secondTokenId);
+    event MessiVote(uint totalCount);
+    event RonaldoVote(uint totalCount);
 
     constructor() ERC721("ElementaryNFT", "ELM") {}
 
@@ -59,6 +63,18 @@ contract ElementaryNFT is ERC721, ERC721Burnable, Ownable {
         names[tokenId] = name;
     }
 
+    /** @notice this function allows two people to swap ElementaryNFTs
+      * @dev swaps imageUris and name mappings, no actual ERC721 transfer */
+    function trade(uint firstId, uint secondId) public onlyOwner {
+        string memory firstIdName = names[firstId];
+        string memory firstIdUri = _tokenURIs[firstId];
+        names[firstId] = names[secondId];
+        _tokenURIs[firstId] = _tokenURIs[secondId];
+        names[secondId] = firstIdName;
+        _tokenURIs[secondId] = firstIdUri;
+        emit TradedNFT(firstId, secondId);
+    }
+
     /** @notice this is an emergency withdrawal function */
     function withdraw() public onlyOwner {
         (bool sent,) = msg.sender.call{value: address(this).balance}("");
@@ -66,6 +82,20 @@ contract ElementaryNFT is ERC721, ERC721Burnable, Ownable {
             revert ElementaryNFT__FailedToCall(address(this).balance);
         }
     }
+
+    /** @notice this function increments votes for Messi by one */
+    function voteForMessi() public onlyOwner {
+        _messiVotes++;
+        emit MessiVote(_messiVotes);
+    }
+
+    /** @notice this function increments votes for Ronaldo by one */
+    function voteForRonaldo() public onlyOwner {
+        _ronaldoVotes++;
+        emit RonaldoVote(_ronaldoVotes);
+    }
+
+    
 
     /** View / Pure functions */
 
