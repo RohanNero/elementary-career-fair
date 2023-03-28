@@ -20,7 +20,7 @@ contract ElementaryNFT is ERC721, ERC721Burnable, Ownable {
     uint8 private _ronaldoVotes;
     uint private _tokenCounter;
     string[] private _tokenURIs;
-    mapping(uint tokenId => string name) names;
+    mapping(uint tokenId => string name) private names;
 
     event MintedNFT(uint tokenId);
     event SetURI(uint tokenId, string tokenUri);

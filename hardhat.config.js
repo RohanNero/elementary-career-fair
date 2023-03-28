@@ -85,7 +85,7 @@ task("createUri", "simple objectURI format using this task's hardcoded values")
 /**@dev this task allows you to create an image URI using the images folder */
 task(
   "createImageUri",
-  "simple objectURI format using this task's hardcoded values"
+  "returns the image URIs of files inside the images folder"
 ).setAction(async (taskArgs) => {
   const pokemonImageUris = [];
   const {
@@ -121,6 +121,17 @@ task(
 task("createNFT", "creates an ElementaryNFT with desired parameters")
   .addParam("pokemon", "name of pokemon for image URI")
   .addParam("name", "the child's chosen nickname for their pokemon NFT")
+  .setAction(async (taskArgs) => {});
+
+/**@dev this task allows two people to trade NFTs */
+task("trade", "allows two people to trade NFTs")
+  .addParam("firstId", "first person's tokenId")
+  .addParam("secondId", "second person's tokenId")
+  .setAction(async (taskArgs) => {});
+
+/**@dev this task allows you to vote for either Messi or Ronaldo */
+task("vote", "votes for either Messi or Ronaldo")
+  .addParam("player")
   .setAction(async (taskArgs) => {});
 
 /** @type import('hardhat/config').HardhatUserConfig */
