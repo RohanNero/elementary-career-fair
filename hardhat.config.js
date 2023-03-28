@@ -30,9 +30,9 @@ task("balance", "Prints an account's balance")
 /**@dev this task allows you to create an elementaryNFT with the desired URI */
 task("createUri", "simple objectURI format using this task's hardcoded values")
   .addOptionalParam("name", "name to be given to your NFT")
-  .addOptionalParam("pokemon", "")
-  .setAction(async () => {
-    console.log();
+  .addParam("pokemon", "name of the pokemon")
+  .setAction(async (taskArgs) => {
+    const pokemonImageUris = [];
     const {
       storeImages,
       storeTokenUriMetadata,
@@ -53,13 +53,20 @@ task("createUri", "simple objectURI format using this task's hardcoded values")
       );
       for (imageUploadResponseIndex in imageUploadResponses) {
         let tokenUriMetadata = { ...metadataTemplate };
+
+        /** if `name` is given then that will be the URI name, otherwise it will be the png file name */
         if (taskArgs.name) {
+          console.log("code reached");
           tokenUriMetadata.name = taskArgs.name;
         } else {
           tokenUriMetadata.name = files[imageUploadResponseIndex].replace(
             ".png",
             ""
           );
+        }
+
+        if (taskArgs.pokemon) {
+          tokenUriMetadata.image = `ipfs://`;
         }
 
         tokenUriMetadata.description = `your desc here ${tokenUriMetadata.name}!`;

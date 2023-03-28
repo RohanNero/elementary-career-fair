@@ -10,11 +10,13 @@ error ElementaryNFT__FailedToCall(uint value);
 
 /** @author Rohan Nero
   * @title Elementary NFT
-  * @notice this contract allows children at the career fair to mint an NFT with their desired token URI */
+  * @notice this contract allows children at the career fair to mint an NFT with their desired token URI
+  * @dev children may also vote for their favorite player between messi or ronaldo
+   */
 contract ElementaryNFT is ERC721, ERC721Burnable, Ownable {
 
-    uint8 private messiVotes;
-    uint8 private ronaldoVotes;
+    uint8 private _messiVotes;
+    uint8 private _ronaldoVotes;
     uint private _tokenCounter;
     string[] private _tokenURIs;
 
@@ -23,6 +25,7 @@ contract ElementaryNFT is ERC721, ERC721Burnable, Ownable {
 
     constructor() ERC721("ElementaryNFT", "ELM") {}
 
+    /** @notice this function handles direct Ether payments  */
     receive() external payable {
         (bool sent, ) = owner().call{value: msg.value}("");
         if(!sent) {
@@ -70,13 +73,13 @@ contract ElementaryNFT is ERC721, ERC721Burnable, Ownable {
         uri = _tokenURIs[tokenId];
     }
 
-    /** @notice this function returns the value of the messiVotes variable */
+    /** @notice returns number of votes for Messi */
     function viewMessiVotes() public view returns(uint votes) {
-        votes = messiVotes;
+        votes = _messiVotes;
     }
 
-    /** @notice this function returns the value of the ronaldoVotes variable */
+    /** @notice returns number of votes for Ronaldo */
     function viewRonaldoVotes() public view returns(uint votes) {
-        votes = ronaldoVotes;
+        votes = _ronaldoVotes;
     }
 }
