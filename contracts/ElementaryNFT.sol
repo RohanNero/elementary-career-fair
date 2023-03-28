@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.4;
+pragma solidity ^0.8.18;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
@@ -19,11 +19,12 @@ contract ElementaryNFT is ERC721, ERC721Burnable, Ownable {
     uint8 private _messiVotes;
     uint8 private _ronaldoVotes;
     uint private _tokenCounter;
-    string[] private _tokenURIs;
-    mapping(uint tokenId => string name) private names;
+    mapping(uint tokenId => string name) private _names;
+    mapping(uint tokenId => string URI) private _tokenURIs;
 
     event MintedNFT(uint tokenId);
     event SetURI(uint tokenId, string tokenUri);
+    event SetName(uint tokenId, string name);
     event TradedNFT(uint firstTokenId, uint secondTokenId);
     event MessiVote(uint totalCount);
     event RonaldoVote(uint totalCount);
@@ -38,7 +39,7 @@ contract ElementaryNFT is ERC721, ERC721Burnable, Ownable {
         }
     }
 
-    /** @notice this function mints an NFT, sets its URI, and names it */
+    /** @notice this function mints an NFT, sets its URI, and _names it */
     function createNFT(string memory uri, string memory name) public {
         safeMint();
         setUri(uri, _tokenCounter - 1);
@@ -47,7 +48,7 @@ contract ElementaryNFT is ERC721, ERC721Burnable, Ownable {
 
     /** @notice this function mints one ElementaryNFT without setting the URI */
     function safeMint() public onlyOwner {
-        _safeMint(address(this), _tokenCounter);
+        _safeMint(msg.sender, _tokenCounter);
         _tokenCounter++;
         emit MintedNFT(_tokenCounter - 1);
     }
@@ -60,17 +61,18 @@ contract ElementaryNFT is ERC721, ERC721Burnable, Ownable {
 
     /** @notice this function sets the name for the NFT at `tokenId` */
     function setName(string memory name, uint tokenId) public onlyOwner {
-        names[tokenId] = name;
+        _names[tokenId] = name;
+        emit SetName(tokenId, name);
     }
 
     /** @notice this function allows two people to swap ElementaryNFTs
       * @dev swaps imageUris and name mappings, no actual ERC721 transfer */
     function trade(uint firstId, uint secondId) public onlyOwner {
-        string memory firstIdName = names[firstId];
+        string memory firstIdName = _names[firstId];
         string memory firstIdUri = _tokenURIs[firstId];
-        names[firstId] = names[secondId];
+        _names[firstId] = _names[secondId];
         _tokenURIs[firstId] = _tokenURIs[secondId];
-        names[secondId] = firstIdName;
+        _names[secondId] = firstIdName;
         _tokenURIs[secondId] = firstIdUri;
         emit TradedNFT(firstId, secondId);
     }
@@ -106,13 +108,13 @@ contract ElementaryNFT is ERC721, ERC721Burnable, Ownable {
 
     /** @notice this function returns the token URI of the NFT at `tokenId`
       * @param tokenId specifies which NFT to change */
-    function viewTokenURIs(uint tokenId) public view returns(string memory uri) {
+    function viewTokenURI(uint tokenId) public view returns(string memory uri) {
         uri = _tokenURIs[tokenId];
     }
 
     /** @notice this function returns the name of the NFT at `tokenId` */
     function viewName(uint tokenId) public view returns(string memory name) {
-        name = names[tokenId];
+        name = _names[tokenId];
     }
 
     /** @notice returns number of votes for Messi */

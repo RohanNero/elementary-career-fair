@@ -57,7 +57,10 @@ task("createUri", "simple objectURI format using this task's hardcoded values")
           ".png",
           ""
         );
-        /** Pokemon name matching to description */
+
+        /** Pokemon name matching to description
+         * 18 pokemon in total, arranged alphabetically
+         */
         if (tokenUriMetadata.name == "Baltoy") {
           tokenUriMetadata.description = `Discovered in ancient ruins, it moves by spinning around and forms a group when it finds others.`;
         } else if (tokenUriMetadata.name == "Buizel") {
@@ -152,7 +155,55 @@ task(
 task("createNFT", "creates an ElementaryNFT with desired parameters")
   .addParam("pokemon", "name of pokemon for image URI")
   .addParam("name", "the child's chosen nickname for their pokemon NFT")
-  .setAction(async (taskArgs) => {});
+  .setAction(async (taskArgs) => {
+    const nft = await ethers.getContract("ElementaryNFT");
+    let pokemon;
+
+    /** Pokemon name matching to URI */
+    if (taskArgs.pokemon == "Baltoy") {
+      pokemon = "ipfs://QmZo5M1wDgKyLZTyVx4jn7zoF44hoHwmpKBE9wfQJ5fUws";
+    } else if (taskArgs.pokemon == "Buizel") {
+      pokemon = "ipfs://QmNWgZYFrWtdoSJYFGhXQVrU2DDA1LcCo58RF47wiuJxGZ";
+    } else if (taskArgs.pokemon == "Carvanha") {
+      pokemon = "";
+    } else if (taskArgs.pokemon == "Clefairy") {
+      pokemon = "";
+    } else if (taskArgs.pokemon == "Corphish") {
+      pokemon = "";
+    } else if (taskArgs.pokemon == "Duskull") {
+      pokemon = "";
+    } else if (taskArgs.pokemon == "Ekans") {
+      pokemon = "";
+    } else if (taskArgs.pokemon == "Golett") {
+      pokemon = "";
+    } else if (taskArgs.pokemon == "Goldeen") {
+      pokemon = "";
+    } else if (taskArgs.pokemon == "Horsea") {
+      pokemon = "";
+    } else if (taskArgs.pokemon == "Koffing") {
+      pokemon = "";
+    } else if (taskArgs.pokemon == "Nickit") {
+      pokemon = "";
+    } else if (taskArgs.pokemon == "Nincada") {
+      pokemon = "";
+    } else if (taskArgs.pokemon == "Nosepass") {
+      pokemon = "";
+    } else if (taskArgs.pokemon == "Shinx") {
+      pokemon = "ipfs://QmY8M5HQ8QRG573BBTKW4Nk6PHkjCFmQX19nyx1JR6jBwo";
+    } else if (taskArgs.pokemon == "Sneasel") {
+      pokemon = "ipfs://QmZjnTw7CfmbRFgU9LhN3ESVRFc2q9tPRPLaZr7DpEH19E";
+    } else if (taskArgs.pokemon == "Voltorb") {
+      pokemon = "";
+    } else if (taskArgs.pokemon == "Yanma") {
+      pokemon = "";
+    }
+    const tx = await nft.createNFT(pokemon, taskArgs.name);
+    const txReceipt = await tx.wait();
+    const id = txReceipt.events[1].args.tokenId;
+    console.log("------------------------------------");
+    console.log("✨ New NFT created with the Id: ", parseInt(id));
+    console.log("------------------------------------");
+  });
 
 /**@dev this task allows two people to trade NFTs */
 task("trade", "allows two people to trade NFTs")
@@ -162,16 +213,64 @@ task("trade", "allows two people to trade NFTs")
 
 /**@dev this task allows you to vote for either Messi or Ronaldo */
 task("vote", "votes for either Messi or Ronaldo")
-  .addParam("player")
-  .setAction(async (taskArgs) => {});
+  .addParam("player", "either messi or ronaldo")
+  .setAction(async (taskArgs) => {
+    const nft = await ethers.getContract("ElementaryNFT");
+    if (taskArgs.player.toLowerCase() == "messi") {
+      await nft.voteForMessi();
+    } else if (taskArgs.player.toLowerCase() == "ronaldo") {
+      await nft.voteForRonaldo();
+    }
+    const messiVotes = await nft.viewMessiVotes();
+    const ronaldoVotes = await nft.viewRonaldoVotes();
+    //console.log(parseInt(messiVotes) < parseInt(ronaldoVotes));
+    console.log("----------------------------------");
+    console.log(parseInt(messiVotes), "votes for Messi!");
+    console.log(parseInt(ronaldoVotes), "votes for Ronaldo!");
+    console.log("----------------------------------");
+    if (parseInt(messiVotes) > parseInt(ronaldoVotes)) {
+      console.log(
+        "Messi is winning by",
+        parseInt(messiVotes - ronaldoVotes),
+        "votes! ⚽"
+      );
+    } else if (parseInt(messiVotes) < parseInt(ronaldoVotes)) {
+      console.log(
+        "Ronaldo is winning by",
+        parseInt(ronaldoVotes - messiVotes),
+        "votes! ⚽"
+      );
+    } else {
+      console.log("Its a tie! ⚽");
+    }
+    console.log("----------------------------------");
+  });
+/**@dev this task allows two people to trade NFTs */
+task(
+  "viewInfo",
+  "allows someone to view name and URI associated with a tokenId"
+)
+  .addParam("id", "the NFT tokenId with info you wish to view")
+  .setAction(async (taskArgs) => {
+    //console.log("code reached");
+    const nft = await ethers.getContract("ElementaryNFT");
+    const name = await nft.viewName(taskArgs.id);
+    const uri = await nft.viewTokenURI(taskArgs.id);
+    console.log("----------------------------------------------");
+    console.log("✨ Info for Pokemon with Id number", parseInt(taskArgs.id));
+    console.log("----------------------------------------------");
+    console.log(`name: ${name}`);
+    console.log(`URI: ${uri}`);
+    console.log("----------------------------------------------");
+  });
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   solidity: {
-    compilers: [{ version: "0.8.8" }, { version: "0.6.6" }],
+    compilers: [{ version: "0.8.18" }, { version: "0.6.6" }],
   },
 
-  defaultNetwork: "hardhat",
+  defaultNetwork: "localhost",
   networks: {
     hardhat: {
       chainId: 31337,
