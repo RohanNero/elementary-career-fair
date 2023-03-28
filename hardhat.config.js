@@ -82,6 +82,42 @@ task("createUri", "simple objectURI format using this task's hardcoded values")
     }
   });
 
+/**@dev this task allows you to create an elementaryNFT with the desired URI */
+task(
+  "createImageUri",
+  "simple objectURI format using this task's hardcoded values"
+).setAction(async (taskArgs) => {
+  const pokemonImageUris = [];
+  const {
+    storeImages,
+    storeTokenUriMetadata,
+  } = require("./utils/uploadToPinata");
+  const imagesLocation = "./images/";
+  const metadataTemplate = {
+    name: "",
+    description: "",
+    image: "",
+  };
+  if (process.env.UPLOAD_TO_PINATA == "true") {
+    tokenUris = await handleTokenUris();
+  }
+  async function handleTokenUris() {
+    imageUris = [];
+    const { responses: imageUploadResponses, files } = await storeImages(
+      imagesLocation
+    );
+    for (imageUploadResponseIndex in imageUploadResponses) {
+      const imageUri = `ipfs://${imageUploadResponses[imageUploadResponseIndex].IpfsHash}`;
+
+      imageUris.push(
+        `ipfs://${imageUploadResponses[imageUploadResponseIndex].IpfsHash}`
+      );
+    }
+    console.log("Image URIs uploaded! They are:");
+    console.log(imageUris);
+  }
+});
+
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   solidity: {
