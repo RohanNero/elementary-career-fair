@@ -19,6 +19,7 @@ contract ElementaryNFT is ERC721, ERC721Burnable, Ownable {
     uint8 private _ronaldoVotes;
     uint private _tokenCounter;
     string[] private _tokenURIs;
+    mapping(uint tokenId => string name) names;
 
     event MintedNFT(uint tokenId);
     event SetURI(uint tokenId, string tokenUri);
@@ -33,10 +34,11 @@ contract ElementaryNFT is ERC721, ERC721Burnable, Ownable {
         }
     }
 
-    /** @notice this function mints an NFT and sets its URI */
-    function createNFT(string memory uri) public {
+    /** @notice this function mints an NFT, sets its URI, and names it */
+    function createNFT(string memory uri, string memory name) public {
         safeMint();
         setUri(uri, _tokenCounter - 1);
+        setName(name, _tokenCounter - 1);
     }
 
     /** @notice this function mints one ElementaryNFT without setting the URI */
@@ -50,6 +52,11 @@ contract ElementaryNFT is ERC721, ERC721Burnable, Ownable {
     function setUri(string memory uri, uint256 tokenId) public onlyOwner {
         _tokenURIs[tokenId] = uri;
         emit SetURI(tokenId, uri);
+    }
+
+    /** @notice this function sets the name for the NFT at `tokenId` */
+    function setName(string memory name, uint tokenId) public onlyOwner {
+        names[tokenId] = name;
     }
 
     /** @notice this is an emergency withdrawal function */
@@ -71,6 +78,11 @@ contract ElementaryNFT is ERC721, ERC721Burnable, Ownable {
       * @param tokenId specifies which NFT to change */
     function viewTokenURIs(uint tokenId) public view returns(string memory uri) {
         uri = _tokenURIs[tokenId];
+    }
+
+    /** @notice this function returns the name of the NFT at `tokenId` */
+    function viewName(uint tokenId) public view returns(string memory name) {
+        name = names[tokenId];
     }
 
     /** @notice returns number of votes for Messi */

@@ -82,7 +82,7 @@ task("createUri", "simple objectURI format using this task's hardcoded values")
     }
   });
 
-/**@dev this task allows you to create an elementaryNFT with the desired URI */
+/**@dev this task allows you to create an image URI using the images folder */
 task(
   "createImageUri",
   "simple objectURI format using this task's hardcoded values"
@@ -117,6 +117,11 @@ task(
     console.log(imageUris);
   }
 });
+/**@dev this task allows you to create an ElementaryNFT with a specific URI and name */
+task("createNFT", "creates an ElementaryNFT with desired parameters")
+  .addParam("pokemon", "name of pokemon for image URI")
+  .addParam("name", "the child's chosen nickname for their pokemon NFT")
+  .setAction(async (taskArgs) => {});
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
