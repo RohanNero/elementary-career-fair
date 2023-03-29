@@ -96,7 +96,12 @@ contract ElementaryNFT is ERC721, ERC721Burnable, Ownable {
         _ronaldoVotes++;
         emit RonaldoVote(_ronaldoVotes);
     }
-
+    
+    /** @notice this function resets the votes */
+    function resetVotes() public onlyOwner {
+        _messiVotes = 0;
+        _ronaldoVotes = 0;
+    }
     
 
     /** View / Pure functions */

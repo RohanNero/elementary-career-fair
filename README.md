@@ -27,3 +27,5 @@ To vote for who you think is best, all you need to do is run this command
 ```
 yarn hardhat vote --player <Messi/Ronaldo>
 ```
+
+## Goerli testnet address:

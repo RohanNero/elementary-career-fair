@@ -216,13 +216,18 @@ task("vote", "votes for either Messi or Ronaldo")
   .addParam("player", "either messi or ronaldo")
   .setAction(async (taskArgs) => {
     const nft = await ethers.getContract("ElementaryNFT");
+
+    /** vote based on `player` input */
     if (taskArgs.player.toLowerCase() == "messi") {
-      await nft.voteForMessi();
+      const voteTx = await nft.voteForMessi();
+      await voteTx.wait();
     } else if (taskArgs.player.toLowerCase() == "ronaldo") {
-      await nft.voteForRonaldo();
+      const voteTx = await nft.voteForRonaldo();
+      await voteTx.wait();
     }
     const messiVotes = await nft.viewMessiVotes();
     const ronaldoVotes = await nft.viewRonaldoVotes();
+
     //console.log(parseInt(messiVotes) < parseInt(ronaldoVotes));
     console.log("----------------------------------");
     console.log(parseInt(messiVotes), "votes for Messi!");
