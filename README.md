@@ -29,3 +29,5 @@ yarn hardhat vote --player <Messi/Ronaldo>
 ```
 
 ## Goerli testnet address:
+
+0xA9582BA6489C8D8f8C545F66aA427c92E3EAA615

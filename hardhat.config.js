@@ -175,9 +175,9 @@ task("createNFT", "creates an ElementaryNFT with desired parameters")
     } else if (taskArgs.pokemon == "Ekans") {
       pokemon = "ipfs://QmVnJhBk8EDivGp4HYVKVGBSa9bSKPa3S3mTu8ycrKedRH";
     } else if (taskArgs.pokemon == "Golett") {
-      pokemon = "ipfs://QmNvdFygv97z6gEzP3HEggbbWCXk6Aeq5QiEqNQsRbM2ED";
-    } else if (taskArgs.pokemon == "Goldeen") {
       pokemon = "ipfs://QmWv5LhDv34x5ZqVkyPdR5wvcG3eVhsDVV8ZByv8N2w8KU";
+    } else if (taskArgs.pokemon == "Goldeen") {
+      pokemon = "ipfs://QmNvdFygv97z6gEzP3HEggbbWCXk6Aeq5QiEqNQsRbM2ED";
     } else if (taskArgs.pokemon == "Horsea") {
       pokemon = "ipfs://QmeX57BLnfrKmZEuHe8TYacKAnpuhTSBWo5wQGV36ZiUHt";
     } else if (taskArgs.pokemon == "Koffing") {
