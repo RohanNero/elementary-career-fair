@@ -4,6 +4,12 @@ This repo was created to help showcase some basic web3 fundamentals to children 
 
 ## NFT Guide
 
+Preliminary step: set up local blockchain if using it, otherwise just pass `--network goerli` when you run the tasks
+
+```
+yarn hardhat node --network hardhat
+```
+
 To begin with the demonstration, pick out a random pokemon card!
 
 Once you've gotten a card, its time to create an **NFT**
@@ -30,4 +36,4 @@ yarn hardhat vote --player <Messi/Ronaldo>
 
 ## Goerli testnet address:
 
-0xA9582BA6489C8D8f8C545F66aA427c92E3EAA615
+https://goerli.etherscan.io/address/0xA9582BA6489C8D8f8C545F66aA427c92E3EAA615#code
