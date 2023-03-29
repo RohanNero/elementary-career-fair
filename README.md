@@ -10,7 +10,7 @@ Preliminary step: set up local blockchain if using it, otherwise just pass `--ne
 yarn hardhat node --network hardhat
 ```
 
-To begin with the demonstration, pick out a random pokemon card!
+**To begin with the demonstration**, pick out a random pokemon card!
 
 Once you've gotten a card, its time to create an **NFT**
 
