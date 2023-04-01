@@ -2,6 +2,9 @@
 
 This repo was created to help showcase some basic web3 fundamentals to children at a title 1 elementary school!
 
+All you need to do in order to use this repo is buy some pokemon cards! Use the ones already hard-coded in so that you don't have to update any code, otherwise you will need to drop a picture of the pokemon into the `images` folder. Once your image is in the image folder update the
+hardhat task `createUri` and then run the command `yarn hardhat createUri`. Once your **URI** is updated you need to add its value to the `createNft` task inside of the `hardhat.config.js` file. Now you should be able to follow the rest of the steps!
+
 ## NFT Guide
 
 Preliminary step: set up local blockchain if using it, otherwise just pass `--network goerli` when you run the tasks
